@@ -52,7 +52,11 @@ async function getRelatedProducts(categoryId: string | null, currentId: string):
 export default async function ProductPage({ params }: PageProps) {
   const { slug } = await params
   const product = await getProduct(slug)
-
+  const supabase = await createClient()
+  const { data: settings } = await supabase
+    .from('consultant_settings')
+    .select('name, email, phone, instagram, whatsapp')
+    .single()
   if (!product) {
     notFound()
   }
@@ -200,7 +204,13 @@ export default async function ProductPage({ params }: PageProps) {
         </div>
       </main>
 
-      <Footer />
+      <Footer 
+        name={settings?.name}
+        email={settings?.email}
+        phone={settings?.phone}
+        whatsapp={settings?.whatsapp}
+        instagram={settings?.instagram}
+      />
     </div>
   )
 }

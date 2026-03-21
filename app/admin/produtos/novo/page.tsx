@@ -14,6 +14,7 @@ import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { createClient } from '@/lib/supabase/client'
 import type { Category } from '@/lib/types'
 import { toast } from 'sonner'
+import { createProduct } from '../actions'
 
 function generateSlug(name: string): string {
   return name
@@ -83,6 +84,7 @@ export default function NewProductPage() {
     try {
       const supabase = createClient()
 
+
       const productData = {
         name: formData.name,
         slug: formData.slug,
@@ -96,10 +98,10 @@ export default function NewProductPage() {
         images: formData.images,
       }
 
-      const { error } = await supabase.from('products').insert(productData)
+      const result = await createProduct(productData)
 
-      if (error) {
-        if (error.code === '23505') {
+      if (result.error) {
+        if (result.error.code === '23505') {
           toast.error('Já existe um produto com este slug')
         } else {
           toast.error('Erro ao criar produto')

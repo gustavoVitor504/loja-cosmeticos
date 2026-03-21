@@ -134,7 +134,12 @@ async function ProductsGrid({
 export default async function HomePage({ searchParams }: PageProps) {
   const params = await searchParams
   const categories = await getCategories()
-
+  const supabase = await createClient()
+  const { data: settings } = await supabase
+    .from('consultant_settings')
+    .select('name, email, phone, instagram, whatsapp')
+    .single()
+    
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
@@ -171,7 +176,13 @@ export default async function HomePage({ searchParams }: PageProps) {
         </section>
       </main>
 
-      <Footer />
+      <Footer
+        name={settings?.name}
+        email={settings?.email}
+        phone={settings?.phone}
+        whatsapp={settings?.whatsapp}
+        instagram={settings?.instagram}
+      />
     </div>
   )
 }

@@ -11,9 +11,12 @@ import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { createClient } from '@/lib/supabase/client'
 import type { ConsultantSettings } from '@/lib/types'
 import { toast } from 'sonner'
+import { Upload } from 'lucide-react'
+
 
 export default function AdminSettingsPage() {
   const router = useRouter()
+  const [isUploading, setIsUploading] = useState(false)
   const [isFetching, setIsFetching] = useState(true)
   const [isLoading, setIsLoading] = useState(false)
   const [settingsId, setSettingsId] = useState<string | null>(null)
@@ -117,6 +120,35 @@ export default function AdminSettingsPage() {
       </div>
     )
   }
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setIsUploading(true)
+    try {
+      const supabase = createClient()
+      const fileExt = file.name.split('.').pop()
+      const fileName = `consultant-photo.${fileExt}`
+
+      const { error: uploadError } = await supabase.storage
+        .from('consultant-assets') // ajuste para o nome do seu bucket
+        .upload(fileName, file, { upsert: true })
+
+      if (uploadError) throw uploadError
+
+      const { data } = supabase.storage
+        .from('consultant-assets')
+        .getPublicUrl(fileName)
+
+      setFormData((prev) => ({ ...prev, photo_url: data.publicUrl }))
+      toast.success('Foto enviada com sucesso!')
+    } catch (error) {
+      console.error('Upload error:', error)
+      toast.error('Erro ao enviar foto')
+    } finally {
+      setIsUploading(false)
+    }
+  }
 
   return (
     <div className="p-8">
@@ -161,14 +193,43 @@ export default function AdminSettingsPage() {
                 </Field>
 
                 <Field>
-                  <FieldLabel htmlFor="photo_url">URL da Foto</FieldLabel>
+                  <FieldLabel htmlFor="photo_url">Foto</FieldLabel>
+
+                  {/* Preview */}
+                  {formData.photo_url && (
+                    <img
+                      src={formData.photo_url}
+                      alt="Preview"
+                      className="h-24 w-24 rounded-full object-cover mb-2"
+                    />
+                  )}
+
+                  {/* Upload */}
+                  <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed px-4 py-3 text-sm text-muted-foreground hover:border-primary hover:text-primary transition-colors">
+                    {isUploading ? (
+                      <Loader2 className="h-4 w-4 animate-spin" />
+                    ) : (
+                      <Upload className="h-4 w-4" />
+                    )}
+                    {isUploading ? 'Enviando...' : 'Clique para fazer upload'}
+                    <input
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handlePhotoUpload}
+                      disabled={isUploading}
+                    />
+                  </label>
+
+                  {/* Fallback URL manual */}
                   <Input
                     id="photo_url"
                     name="photo_url"
                     type="url"
                     value={formData.photo_url}
                     onChange={handleChange}
-                    placeholder="https://exemplo.com/sua-foto.jpg"
+                    placeholder="Ou cole uma URL diretamente"
+                    className="mt-2"
                   />
                 </Field>
 

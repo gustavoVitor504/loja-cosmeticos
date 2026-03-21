@@ -9,10 +9,17 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { useCartStore } from '@/lib/cart-store'
+import { createClient } from '@/lib/supabase/client'
 
-export default function CartPage() {
+export default async function CartPage() {
   const { items, removeItem, updateQuantity, getTotal, clearCart } = useCartStore()
   const total = getTotal()
+  const supabase = createClient()
+  const { data: settings } = await supabase
+    .from('consultant_settings')
+    .select('name, email, phone, instagram, whatsapp')
+    .single()
+
 
   if (items.length === 0) {
     return (
@@ -30,7 +37,13 @@ export default function CartPage() {
             </Link>
           </div>
         </main>
-        <Footer />
+        <Footer 
+          name={settings?.name}
+          email={settings?.email}
+          phone={settings?.phone}
+          whatsapp={settings?.whatsapp}
+          instagram={settings?.instagram}
+        />
       </div>
     )
   }
@@ -191,7 +204,13 @@ export default function CartPage() {
         </div>
       </main>
 
-      <Footer />
+      <Footer 
+        name={settings?.name}
+        email={settings?.email}
+        phone={settings?.phone}
+        whatsapp={settings?.whatsapp}
+        instagram={settings?.instagram}
+      />
     </div>
   )
 }

@@ -13,6 +13,7 @@ import {
 import { createClient } from '@/lib/supabase/client'
 import type { Product } from '@/lib/types'
 import { toast } from 'sonner'
+import { toggleProductActive, deleteProduct } from './actions'
 
 interface ProductActionsProps {
   product: Product
@@ -22,37 +23,22 @@ export function ProductActions({ product }: ProductActionsProps) {
   const router = useRouter()
 
   const handleToggleActive = async () => {
-    const supabase = createClient()
-    
-    const { error } = await supabase
-      .from('products')
-      .update({ is_active: !product.is_active })
-      .eq('id', product.id)
-
-    if (error) {
+    const result = await toggleProductActive(product.id, product.is_active)
+    if (result.error) {
       toast.error('Erro ao atualizar produto')
       return
     }
-
     toast.success(product.is_active ? 'Produto desativado' : 'Produto ativado')
     router.refresh()
   }
 
   const handleDelete = async () => {
     if (!confirm('Tem certeza que deseja excluir este produto?')) return
-
-    const supabase = createClient()
-    
-    const { error } = await supabase
-      .from('products')
-      .delete()
-      .eq('id', product.id)
-
-    if (error) {
+    const result = await deleteProduct(product.id)
+    if (result.error) {
       toast.error('Erro ao excluir produto')
       return
     }
-
     toast.success('Produto excluído')
     router.refresh()
   }

@@ -16,7 +16,7 @@ import { useCartStore } from '@/lib/cart-store'
 import { createClient } from '@/lib/supabase/client'
 import { toast } from 'sonner'
 
-export default function CheckoutPage() {
+export default async function CheckoutPage() {
   const router = useRouter()
   const { items, getTotal, clearCart } = useCartStore()
   const total = getTotal()
@@ -31,6 +31,12 @@ export default function CheckoutPage() {
     address: '',
     notes: '',
   })
+
+  const supabase = createClient()
+  const { data: settings } = await supabase
+    .from('consultant_settings')
+    .select('name, email, phone, instagram, whatsapp')
+    .single()
 
   useEffect(() => {
     const supabase = createClient()
@@ -341,7 +347,13 @@ export default function CheckoutPage() {
         </div>
       </main>
 
-      <Footer />
+      <Footer 
+        name={settings?.name}
+        email={settings?.email}
+        phone={settings?.phone}
+        whatsapp={settings?.whatsapp}
+        instagram={settings?.instagram}
+      />
     </div>
   )
 }

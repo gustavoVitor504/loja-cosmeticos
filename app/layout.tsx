@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
+import { createClient } from '@/lib/supabase/server'
+import { Footer } from '@/components/footer'
+import { Header } from '@/components/header'
 import './globals.css'
 
 const playfair = Playfair_Display({ 
@@ -22,9 +25,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode
-}>) {
+}) {
+
   return (
     <html lang="pt-BR">
       <body className={`${playfair.variable} ${inter.variable} font-sans antialiased`}>

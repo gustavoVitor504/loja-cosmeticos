@@ -10,7 +10,7 @@ import type { ConsultantSettings } from '@/lib/types'
 async function getConsultantSettings(): Promise<ConsultantSettings | null> {
   const supabase = await createClient()
   
-  const { data, error } = await supabase
+  const { data , error } = await supabase
     .from('consultant_settings')
     .select('*')
     .single()
@@ -197,7 +197,13 @@ export default async function AboutPage() {
         </section>
       </main>
 
-      <Footer />
+      <Footer
+        name={consultant?.name}
+        email={consultant?.email}
+        phone={consultant?.phone}
+        whatsapp={consultant?.whatsapp}
+        instagram={consultant?.instagram}
+      />
     </div>
   )
 }

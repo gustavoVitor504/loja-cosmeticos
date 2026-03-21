@@ -42,6 +42,10 @@ export default async function OrderDetailPage({ params }: PageProps) {
   const { id } = await params
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  const { data: settings } = await supabase
+    .from('consultant_settings')
+    .select('name, email, phone, instagram, whatsapp')
+    .single()
 
   if (!user) {
     redirect('/auth/login')
@@ -190,7 +194,13 @@ export default async function OrderDetailPage({ params }: PageProps) {
         </div>
       </main>
 
-      <Footer />
+      <Footer 
+      name={settings?.name}
+      email={settings?.email}
+      phone={settings?.phone}
+      whatsapp={settings?.whatsapp}
+      instagram={settings?.instagram}
+      />
     </div>
   )
 }

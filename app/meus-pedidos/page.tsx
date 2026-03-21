@@ -20,6 +20,7 @@ const statusMap: Record<string, { label: string; variant: 'default' | 'secondary
 async function getOrders(userId: string): Promise<Order[]> {
   const supabase = await createClient()
   
+  
   const { data, error } = await supabase
     .from('orders')
     .select('*, order_items(*)')
@@ -37,6 +38,10 @@ async function getOrders(userId: string): Promise<Order[]> {
 export default async function MyOrdersPage() {
   const supabase = await createClient()
   const { data: { user } } = await supabase.auth.getUser()
+  const { data: settings } = await supabase
+    .from('consultant_settings')
+    .select('name, email, phone, instagram, whatsapp')
+    .single()
 
   if (!user) {
     redirect('/auth/login?redirect=/meus-pedidos')
@@ -123,7 +128,13 @@ export default async function MyOrdersPage() {
         )}
       </main>
 
-      <Footer />
+      <Footer
+      name={settings?.name}
+      email={settings?.email}
+      phone={settings?.phone}
+      whatsapp={settings?.whatsapp}
+      instagram={settings?.instagram}
+      />
     </div>
   )
 }
