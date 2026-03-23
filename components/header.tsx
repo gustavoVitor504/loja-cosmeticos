@@ -1,14 +1,15 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { ShoppingBag, User, Menu, X, Leaf } from 'lucide-react'
+import { usePathname, useRouter } from 'next/navigation'
+import { ShoppingBag, User, Menu, Leaf, LogOut } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Sheet, SheetContent, SheetTrigger, SheetTitle } from '@/components/ui/sheet'
 import { Badge } from '@/components/ui/badge'
 import { useCartStore } from '@/lib/cart-store'
 import { createClient } from '@/lib/supabase/client'
+import { toast } from 'sonner'
 
 const navigation = [
   { name: 'Produtos', href: '/' },
@@ -17,6 +18,7 @@ const navigation = [
 
 export function Header() {
   const pathname = usePathname()
+  const router = useRouter()
   const [isOpen, setIsOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)
@@ -40,6 +42,15 @@ export function Header() {
     
     return () => subscription.unsubscribe()
   }, [])
+
+  const handleLogout = async () => {
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    setIsOpen(false)
+    toast.success('Até logo!')
+    router.push('/')
+    router.refresh()
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -78,17 +89,20 @@ export function Header() {
           </Link>
           
           {isLoggedIn ? (
-            <Link href={isAdmin ? '/admin' : '/meus-pedidos'}>
-              <Button variant="ghost" size="sm" className="gap-2">
-                <User className="h-4 w-4" />
-                {isAdmin ? 'Painel Admin' : 'Minha Conta'}
+            <div className="flex items-center gap-2">
+              <Link href={isAdmin ? '/admin' : '/meus-pedidos'}>
+                <Button variant="ghost" size="sm" className="gap-2">
+                  <User className="h-4 w-4" />
+                  {isAdmin ? 'Painel Admin' : 'Minha Conta'}
+                </Button>
+              </Link>
+              <Button variant="ghost" size="icon" onClick={handleLogout} title="Sair">
+                <LogOut className="h-4 w-4" />
               </Button>
-            </Link>
+            </div>
           ) : (
             <Link href="/auth/login">
-              <Button variant="outline" size="sm">
-                Entrar
-              </Button>
+              <Button variant="outline" size="sm">Entrar</Button>
             </Link>
           )}
         </div>
@@ -129,13 +143,22 @@ export function Header() {
                 ))}
                 <hr className="border-border" />
                 {isLoggedIn ? (
-                  <Link
-                    href={isAdmin ? '/admin' : '/meus-pedidos'}
-                    onClick={() => setIsOpen(false)}
-                    className="text-lg font-medium"
-                  >
-                    {isAdmin ? 'Painel Admin' : 'Minha Conta'}
-                  </Link>
+                  <>
+                    <Link
+                      href={isAdmin ? '/admin' : '/meus-pedidos'}
+                      onClick={() => setIsOpen(false)}
+                      className="text-lg font-medium"
+                    >
+                      {isAdmin ? 'Painel Admin' : 'Minha Conta'}
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="flex items-center gap-2 text-lg font-medium text-destructive hover:text-destructive/80 transition-colors text-left"
+                    >
+                      <LogOut className="h-5 w-5" />
+                      Sair
+                    </button>
+                  </>
                 ) : (
                   <Link
                     href="/auth/login"
