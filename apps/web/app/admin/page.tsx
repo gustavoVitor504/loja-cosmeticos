@@ -1,7 +1,7 @@
 import { serverApi } from '@/lib/api/server'
 import { getOrderStatusInfo, type DashboardStats } from '@/lib/types'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Package, ShoppingCart, DollarSign, TrendingUp, AlertTriangle } from 'lucide-react'
+import { Package, ShoppingCart, DollarSign, AlertTriangle } from 'lucide-react'
 
 export default async function AdminDashboard() {
   const stats = await serverApi<DashboardStats>('/admin/dashboard')

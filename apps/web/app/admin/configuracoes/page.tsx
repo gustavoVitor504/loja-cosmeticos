@@ -83,7 +83,6 @@ export default function AdminSettingsPage() {
       toast.success('Configurações salvas com sucesso!')
       router.refresh()
     } catch (error) {
-      console.error('Error saving settings:', error)
       toast.error(error instanceof ApiError ? error.message : 'Erro ao salvar configurações')
     } finally {
       setIsLoading(false)
@@ -111,7 +110,6 @@ export default function AdminSettingsPage() {
       setFormData((prev) => ({ ...prev, photo_url: url }))
       toast.success('Foto enviada! Clique em salvar para aplicar.')
     } catch (error) {
-      console.error('Upload error:', error)
       toast.error(error instanceof ApiError ? error.message : 'Erro ao enviar foto')
     } finally {
       setIsUploading(false)

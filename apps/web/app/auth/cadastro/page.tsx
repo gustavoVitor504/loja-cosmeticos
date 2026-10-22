@@ -69,7 +69,7 @@ export default function SignUpPage() {
 
       toast.success('Conta criada! Verifique seu e-mail para confirmar.')
       router.push('/auth/login')
-    } catch (error) {
+    } catch {
       toast.error('Erro ao criar conta')
     } finally {
       setIsLoading(false)

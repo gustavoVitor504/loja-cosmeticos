@@ -3,7 +3,6 @@ import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import { Phone, Mail, Instagram, MessageCircle, Award, Heart, Leaf, Sparkles } from 'lucide-react'
 
 export default async function AboutPage() {

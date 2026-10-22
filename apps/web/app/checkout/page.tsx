@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import { Field, FieldGroup, FieldLabel } from '@/components/ui/field'
 import { useCartStore } from '@/lib/cart-store'
+import type { User } from '@supabase/supabase-js'
 import { createClient } from '@/lib/supabase/client'
 import { ApiError, clientApi } from '@/lib/api/client'
 import { toast } from 'sonner'
@@ -25,8 +26,8 @@ export default function CheckoutPage() {
   
   const [isLoading, setIsLoading] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
-  const [user, setUser] = useState<any>(null)
-const [settings, setSettings] = useState<Partial<ConsultantSettings> | null>(null)
+  const [user, setUser] = useState<User | null>(null)
+  const [settings, setSettings] = useState<Partial<ConsultantSettings> | null>(null)
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -97,7 +98,6 @@ const [settings, setSettings] = useState<Partial<ConsultantSettings> | null>(nul
       clearCart()
       toast.success('Pedido realizado com sucesso!')
     } catch (error) {
-      console.error('Checkout error:', error)
       toast.error(error instanceof ApiError ? error.message : 'Erro ao processar pedido. Tente novamente.')
     } finally {
       setIsLoading(false)

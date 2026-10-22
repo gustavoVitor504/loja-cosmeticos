@@ -41,6 +41,7 @@ No SQL Editor do Supabase, rode em ordem:
 1. `scripts/001_create_tables.sql`
 2. `scripts/002_seed_data.sql`
 3. `scripts/003_order_tracking.sql` — histórico de etapas, funções `place_order` / `update_order_status` e flag de admin em `app_metadata`
+4. `scripts/004_enable_rls.sql` — ativa RLS em todas as tabelas e remove políticas para `anon`/`authenticated` (o front não acessa tabelas, só a API com `service_role`). O `SELECT` no final deve mostrar `rls_ativo = true` e `politicas = 0` em todas as linhas
 
 Para tornar um usuário admin:
 

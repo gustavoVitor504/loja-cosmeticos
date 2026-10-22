@@ -1,13 +1,12 @@
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { ArrowLeft, BookOpen, Minus, Plus, ShoppingBag, Package } from 'lucide-react'
+import { ArrowLeft, BookOpen, Package } from 'lucide-react'
 import { getSettings, serverApi, serverApiOrNull } from '@/lib/api/server'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { ImageCarousel } from '@/components/image-carousel'
 import { AddToCartButton } from './add-to-cart-button'
 import { Badge } from '@/components/ui/badge'
-import { Button } from '@/components/ui/button'
 import type { Product } from '@/lib/types'
 
 interface PageProps {

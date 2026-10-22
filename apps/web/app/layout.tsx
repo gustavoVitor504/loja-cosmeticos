@@ -2,8 +2,6 @@ import type { Metadata } from 'next'
 import { Playfair_Display, Inter } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import { Toaster } from '@/components/ui/sonner'
-import { Footer } from '@/components/footer'
-import { Header } from '@/components/header'
 import './globals.css'
 
 const playfair = Playfair_Display({ 

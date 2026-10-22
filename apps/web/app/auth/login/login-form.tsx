@@ -12,7 +12,6 @@ import { createClient } from '@/lib/supabase/client'
 import { toast } from 'sonner'
 
 export default function LoginForm() {
-  // todo o código atual da LoginPage vai aqui sem mudança
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirect') || '/'
@@ -48,7 +47,7 @@ export default function LoginForm() {
         router.push(redirectTo)
       }
       router.refresh()
-    } catch (error) {
+    } catch {
       toast.error('Erro ao fazer login')
     } finally {
       setIsLoading(false)
