@@ -9,10 +9,8 @@ import type { PostgrestError } from '@supabase/supabase-js'
 
 const logger = new Logger('Supabase')
 
-/** Converte erros do Postgres/PostgREST em exceções HTTP. */
 export function throwSupabaseError(error: PostgrestError, fallback = 'Erro interno'): never {
   switch (error.code) {
-    // RAISE EXCEPTION ... USING ERRCODE = 'P0001' nas funções SQL = erro de regra de negócio
     case 'P0001':
       throw new BadRequestException(error.message)
     case 'P0002':

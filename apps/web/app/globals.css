@@ -4,23 +4,18 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Natura-inspired warm color palette */
   --background: oklch(0.99 0.005 85);
   --foreground: oklch(0.25 0.02 45);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.25 0.02 45);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.25 0.02 45);
-  /* Primary: Natura orange/amber */
   --primary: oklch(0.65 0.18 55);
   --primary-foreground: oklch(1 0 0);
-  /* Secondary: Soft sage green */
   --secondary: oklch(0.92 0.03 145);
   --secondary-foreground: oklch(0.35 0.05 145);
-  /* Muted: Warm gray */
   --muted: oklch(0.96 0.008 85);
   --muted-foreground: oklch(0.5 0.02 45);
-  /* Accent: Rose/blush */
   --accent: oklch(0.88 0.06 15);
   --accent-foreground: oklch(0.35 0.08 15);
   --destructive: oklch(0.577 0.245 27.325);
@@ -28,7 +23,6 @@
   --border: oklch(0.9 0.01 85);
   --input: oklch(0.9 0.01 85);
   --ring: oklch(0.65 0.18 55);
-  /* Chart colors */
   --chart-1: oklch(0.65 0.18 55);
   --chart-2: oklch(0.6 0.12 145);
   --chart-3: oklch(0.7 0.1 15);

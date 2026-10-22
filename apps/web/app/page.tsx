@@ -49,14 +49,14 @@ function ProductsSkeleton() {
   )
 }
 
-async function ProductsGrid({ 
-  category, 
-  sort, 
-  search 
-}: { 
+async function ProductsGrid({
+  category,
+  sort,
+  search
+}: {
   category?: string
   sort?: SortOption
-  search?: string 
+  search?: string
 }) {
   const products = await getProducts(category, sort, search)
 
@@ -83,13 +83,12 @@ export default async function HomePage({ searchParams }: PageProps) {
   const params = await searchParams
   const categories = await getCategories()
   const settings = await getSettings()
-    
+
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      
+
       <main className="flex-1">
-        {/* Hero Section */}
         <section className="bg-gradient-to-b from-secondary/50 to-background py-16">
           <div className="container mx-auto px-4 text-center">
             <h1 className="text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl">
@@ -102,7 +101,6 @@ export default async function HomePage({ searchParams }: PageProps) {
           </div>
         </section>
 
-        {/* Products Section */}
         <section className="container mx-auto px-4 py-12">
           <div className="mb-8">
             <Suspense fallback={<Skeleton className="h-10 w-full" />}>
@@ -111,9 +109,9 @@ export default async function HomePage({ searchParams }: PageProps) {
           </div>
 
           <Suspense fallback={<ProductsSkeleton />}>
-            <ProductsGrid 
-              category={params.categoria} 
-              sort={params.ordenar} 
+            <ProductsGrid
+              category={params.categoria}
+              sort={params.ordenar}
               search={params.busca}
             />
           </Suspense>

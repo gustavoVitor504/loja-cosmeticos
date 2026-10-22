@@ -36,10 +36,10 @@ export default async function OrderDetailPage({ params }: PageProps) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      
+
       <main className="flex-1 container mx-auto px-4 py-8">
-        <Link 
-          href="/meus-pedidos" 
+        <Link
+          href="/meus-pedidos"
           className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-6"
         >
           <ArrowLeft className="h-4 w-4" />
@@ -65,7 +65,6 @@ export default async function OrderDetailPage({ params }: PageProps) {
         </div>
 
         <div className="grid gap-6 lg:grid-cols-3">
-          {/* Order Items */}
           <div className="lg:col-span-2 space-y-6">
             <Card>
               <CardHeader>
@@ -115,7 +114,6 @@ export default async function OrderDetailPage({ params }: PageProps) {
             </Card>
           </div>
 
-          {/* Order Info */}
           <div className="space-y-6">
             <Card>
               <CardHeader>
@@ -131,7 +129,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
                     </div>
                   </div>
                 )}
-                
+
                 {order.customer_email && (
                   <div className="flex items-start gap-3">
                     <Mail className="h-5 w-5 text-muted-foreground mt-0.5" />
@@ -141,7 +139,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
                     </div>
                   </div>
                 )}
-                
+
                 {order.customer_phone && (
                   <div className="flex items-start gap-3">
                     <Phone className="h-5 w-5 text-muted-foreground mt-0.5" />
@@ -151,7 +149,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
                     </div>
                   </div>
                 )}
-                
+
                 {order.shipping_address && (
                   <div className="flex items-start gap-3">
                     <MapPin className="h-5 w-5 text-muted-foreground mt-0.5" />
@@ -178,7 +176,7 @@ export default async function OrderDetailPage({ params }: PageProps) {
         </div>
       </main>
 
-      <Footer 
+      <Footer
       name={settings?.name}
       email={settings?.email}
       phone={settings?.phone}

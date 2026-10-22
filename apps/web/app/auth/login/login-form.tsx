@@ -15,7 +15,7 @@ export default function LoginForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const redirectTo = searchParams.get('redirect') || '/'
-  
+
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -27,7 +27,7 @@ export default function LoginForm() {
 
     try {
       const supabase = createClient()
-      
+
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -39,8 +39,7 @@ export default function LoginForm() {
       }
 
       toast.success('Login realizado com sucesso!')
-      
-      // Redirect based on user role
+
       if (data.user?.app_metadata?.is_admin === true) {
         router.push('/admin')
       } else {
@@ -81,7 +80,7 @@ export default function LoginForm() {
                     required
                     />
                 </Field>
-                
+
                 <Field>
                     <FieldLabel htmlFor="password">Senha</FieldLabel>
                     <div className="relative">
@@ -124,7 +123,7 @@ export default function LoginForm() {
             </CardContent>
         </Card>
     </div>
-    
+
   )
 
 }

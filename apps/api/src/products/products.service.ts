@@ -28,7 +28,6 @@ export class ProductsService {
     }
 
     if (busca) {
-      // Escapa curingas do LIKE digitados pelo usuário
       const escaped = busca.replace(/[\\%_]/g, (char) => `\\${char}`)
       query = query.ilike('name', `%${escaped}%`)
     }

@@ -23,7 +23,6 @@ export class OrdersService {
     return this.supabase.client
   }
 
-  /** Cria o pedido via função SQL: preço vindo do banco, estoque baixado na mesma transação. */
   async place(userId: string, dto: CheckoutDto): Promise<{ orderId: string }> {
     const { data, error } = await this.db.rpc('place_order', {
       p_user_id: userId,
@@ -81,7 +80,6 @@ export class OrdersService {
     return sortHistory(data as Order)
   }
 
-  /** Muda a etapa e registra no histórico (função SQL; ao cancelar, devolve o estoque). */
   async updateStatus(id: string, actorId: string, dto: UpdateOrderStatusDto): Promise<Order> {
     const { error } = await this.db.rpc('update_order_status', {
       p_order_id: id,

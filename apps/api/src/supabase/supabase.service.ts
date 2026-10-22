@@ -2,10 +2,6 @@ import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { createClient, SupabaseClient } from '@supabase/supabase-js'
 
-/**
- * Cliente com a chave service_role: ignora RLS.
- * Toda regra de acesso (quem pode ver/alterar o quê) é aplicada nos controllers/services.
- */
 @Injectable()
 export class SupabaseService {
   readonly client: SupabaseClient

@@ -1,5 +1,3 @@
-// Etapas do pedido/entrega, na ordem em que normalmente acontecem.
-// 'cancelled' fica fora da sequência e pode ser aplicado a partir de qualquer etapa aberta.
 export const ORDER_STATUS_FLOW = [
   'pending',
   'confirmed',

@@ -26,20 +26,20 @@ export function Header() {
 
   useEffect(() => {
     const supabase = createClient()
-    
+
     const checkAuth = async () => {
       const { data: { user } } = await supabase.auth.getUser()
       setIsLoggedIn(!!user)
       setIsAdmin(user?.app_metadata?.is_admin === true)
     }
-    
+
     checkAuth()
-    
+
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_, session) => {
       setIsLoggedIn(!!session?.user)
       setIsAdmin(session?.user?.app_metadata?.is_admin === true)
     })
-    
+
     return () => subscription.unsubscribe()
   }, [])
 
@@ -60,7 +60,6 @@ export function Header() {
           <span className="text-xl font-semibold tracking-tight">Natura</span>
         </Link>
 
-        {/* Desktop Navigation */}
         <div className="hidden md:flex md:items-center md:gap-8">
           {navigation.map((item) => (
             <Link
@@ -75,7 +74,6 @@ export function Header() {
           ))}
         </div>
 
-        {/* Desktop Actions */}
         <div className="hidden md:flex md:items-center md:gap-4">
           <Link href="/carrinho">
             <Button variant="ghost" size="icon" className="relative">
@@ -87,7 +85,7 @@ export function Header() {
               )}
             </Button>
           </Link>
-          
+
           {isLoggedIn ? (
             <div className="flex items-center gap-2">
               <Link href={isAdmin ? '/admin' : '/meus-pedidos'}>
@@ -107,7 +105,6 @@ export function Header() {
           )}
         </div>
 
-        {/* Mobile Navigation */}
         <div className="flex items-center gap-2 md:hidden">
           <Link href="/carrinho">
             <Button variant="ghost" size="icon" className="relative">
@@ -119,7 +116,7 @@ export function Header() {
               )}
             </Button>
           </Link>
-          
+
           <Sheet open={isOpen} onOpenChange={setIsOpen}>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon">

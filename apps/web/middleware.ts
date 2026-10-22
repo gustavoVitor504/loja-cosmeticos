@@ -3,10 +3,8 @@ import { type NextRequest, NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 
 export async function middleware(request: NextRequest) {
-  // Primeiro atualiza a sessão
   const response = await updateSession(request)
-  
-  // Proteger rotas admin
+
   if (request.nextUrl.pathname.startsWith('/admin')) {
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -20,26 +18,25 @@ export async function middleware(request: NextRequest) {
         },
       }
     )
-    
+
     const { data: { user } } = await supabase.auth.getUser()
-    
+
     if (!user) {
       return NextResponse.redirect(new URL('/auth/login?redirect=/admin', request.url))
     }
-    
+
     const isAdmin = user.app_metadata?.is_admin === true
-    
+
     if (!isAdmin) {
       return NextResponse.redirect(new URL('/', request.url))
     }
   }
-  
-  // Proteger rotas que requerem autenticação
+
   const protectedRoutes = ['/meus-pedidos', '/checkout']
-  const isProtectedRoute = protectedRoutes.some(route => 
+  const isProtectedRoute = protectedRoutes.some(route =>
     request.nextUrl.pathname.startsWith(route)
   )
-  
+
   if (isProtectedRoute) {
     const supabase = createServerClient(
       process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -53,14 +50,14 @@ export async function middleware(request: NextRequest) {
         },
       }
     )
-    
+
     const { data: { user } } = await supabase.auth.getUser()
-    
+
     if (!user) {
       return NextResponse.redirect(new URL(`/auth/login?redirect=${request.nextUrl.pathname}`, request.url))
     }
   }
-  
+
   return response
 }
 

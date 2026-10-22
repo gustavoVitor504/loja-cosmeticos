@@ -10,7 +10,6 @@ export default async function AdminDashboard() {
     <div className="p-8">
       <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
 
-      {/* Stats Grid */}
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between pb-2">
@@ -78,7 +77,6 @@ export default async function AdminDashboard() {
       </div>
 
       <div className="grid gap-6 lg:grid-cols-2">
-        {/* Recent Orders */}
         <Card>
           <CardHeader>
             <CardTitle>Pedidos Recentes</CardTitle>
@@ -115,7 +113,6 @@ export default async function AdminDashboard() {
           </CardContent>
         </Card>
 
-        {/* Low Stock Alert */}
         <Card>
           <CardHeader>
             <CardTitle className="flex items-center gap-2">

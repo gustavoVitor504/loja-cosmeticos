@@ -69,7 +69,7 @@ export default function EditProductPage({ params }: PageProps) {
       })
       setIsFetching(false)
     }
-    
+
     fetchData()
   }, [id, router])
 
@@ -134,8 +134,8 @@ export default function EditProductPage({ params }: PageProps) {
 
   return (
     <div className="p-8">
-      <Link 
-        href="/admin/produtos" 
+      <Link
+        href="/admin/produtos"
         className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
@@ -147,7 +147,6 @@ export default function EditProductPage({ params }: PageProps) {
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6 lg:grid-cols-3">
           <div className="lg:col-span-2 space-y-6">
-            {/* Basic Info */}
             <Card>
               <CardHeader>
                 <CardTitle>Informações Básicas</CardTitle>
@@ -190,7 +189,6 @@ export default function EditProductPage({ params }: PageProps) {
               </CardContent>
             </Card>
 
-            {/* Pricing */}
             <Card>
               <CardHeader>
                 <CardTitle>Preço e Estoque</CardTitle>
@@ -242,7 +240,6 @@ export default function EditProductPage({ params }: PageProps) {
               </CardContent>
             </Card>
 
-            {/* Images */}
             <Card>
               <CardHeader>
                 <CardTitle>Imagens</CardTitle>
@@ -290,7 +287,6 @@ export default function EditProductPage({ params }: PageProps) {
             </Card>
           </div>
 
-          {/* Sidebar */}
           <div className="space-y-6">
             <Card>
               <CardHeader>

@@ -5,7 +5,6 @@ import { AdminOnly, Authenticated, CurrentUser } from '../auth/auth.decorators'
 import { CheckoutDto, UpdateOrderStatusDto } from './order.dto'
 import { OrdersService } from './orders.service'
 
-/** Pedidos do cliente logado. */
 @Authenticated()
 @Controller('orders')
 export class OrdersController {

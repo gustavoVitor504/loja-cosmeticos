@@ -34,7 +34,6 @@ export async function apiFetch<T>(path: string, { body, token, headers, ...init 
       const data = await response.json()
       message = Array.isArray(data.message) ? data.message.join(', ') : (data.message ?? message)
     } catch {
-      // resposta sem JSON
     }
     throw new ApiError(message, response.status)
   }

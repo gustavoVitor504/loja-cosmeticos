@@ -29,7 +29,6 @@ export function AdminSidebar() {
 
   return (
     <aside className="w-64 bg-card border-r flex flex-col">
-      {/* Logo */}
       <div className="p-6 border-b">
         <Link href="/admin" className="flex items-center gap-2">
           <Leaf className="h-8 w-8 text-primary" />
@@ -40,13 +39,12 @@ export function AdminSidebar() {
         </Link>
       </div>
 
-      {/* Navigation */}
       <nav className="flex-1 p-4 space-y-1">
         {navItems.map((item) => {
           const Icon = item.icon
-          const isActive = pathname === item.href || 
+          const isActive = pathname === item.href ||
             (item.href !== '/admin' && pathname.startsWith(item.href))
-          
+
           return (
             <Link
               key={item.href}
@@ -65,7 +63,6 @@ export function AdminSidebar() {
         })}
       </nav>
 
-      {/* Footer */}
       <div className="p-4 border-t space-y-2">
         <Link href="/">
           <Button variant="outline" className="w-full justify-start gap-2">
@@ -73,8 +70,8 @@ export function AdminSidebar() {
             Ver Loja
           </Button>
         </Link>
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           className="w-full justify-start gap-2 text-muted-foreground"
           onClick={handleLogout}
         >

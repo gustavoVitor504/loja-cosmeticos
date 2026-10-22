@@ -93,8 +93,6 @@ export interface CartItem {
 
 export type SortOption = 'relevance' | 'price-asc' | 'price-desc' | 'name' | 'newest'
 
-// ---- Contratos da API ----
-
 export interface CheckoutItemInput {
   productId: string
   quantity: number

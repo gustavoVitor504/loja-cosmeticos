@@ -13,7 +13,6 @@ import type { ConsultantSettings, ConsultantSettingsInput } from '@/lib/types'
 import { toast } from 'sonner'
 import { Upload } from 'lucide-react'
 
-
 export default function AdminSettingsPage() {
   const router = useRouter()
   const [isUploading, setIsUploading] = useState(false)
@@ -51,7 +50,7 @@ export default function AdminSettingsPage() {
       }
       setIsFetching(false)
     }
-    
+
     fetchSettings()
   }, [])
 
@@ -122,7 +121,6 @@ export default function AdminSettingsPage() {
 
       <form onSubmit={handleSubmit}>
         <div className="grid gap-6 lg:grid-cols-2">
-          {/* Personal Info */}
           <Card>
             <CardHeader>
               <CardTitle className="flex items-center gap-2">
@@ -161,7 +159,6 @@ export default function AdminSettingsPage() {
                 <Field>
                   <FieldLabel htmlFor="photo_url">Foto</FieldLabel>
 
-                  {/* Preview */}
                   {formData.photo_url && (
                     <img
                       src={formData.photo_url}
@@ -170,7 +167,6 @@ export default function AdminSettingsPage() {
                     />
                   )}
 
-                  {/* Upload */}
                   <label className="flex cursor-pointer items-center gap-2 rounded-md border border-dashed px-4 py-3 text-sm text-muted-foreground hover:border-primary hover:text-primary transition-colors">
                     {isUploading ? (
                       <Loader2 className="h-4 w-4 animate-spin" />
@@ -187,7 +183,6 @@ export default function AdminSettingsPage() {
                     />
                   </label>
 
-                  {/* Fallback URL manual */}
                   <Input
                     id="photo_url"
                     name="photo_url"
@@ -214,7 +209,6 @@ export default function AdminSettingsPage() {
             </CardContent>
           </Card>
 
-          {/* Contact Info */}
           <Card>
             <CardHeader>
               <CardTitle>Informações de Contato</CardTitle>

@@ -117,7 +117,6 @@ export class SettingsService {
     if (error) throw new BadRequestException(`Erro ao enviar foto: ${error.message}`)
 
     const { data } = this.db.storage.from(bucket).getPublicUrl(path)
-    // O nome do arquivo é fixo; o parâmetro evita que o navegador/CDN mostre a foto antiga
     return { url: `${data.publicUrl}?v=${Date.now()}` }
   }
 }

@@ -14,7 +14,6 @@ export default async function AdminLayout({
     redirect('/auth/login')
   }
 
-  // Check if user is admin
   if (user.app_metadata?.is_admin !== true) {
     redirect('/')
   }

@@ -28,7 +28,7 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
       toast.error('Produto sem estoque')
       return
     }
-    
+
     addItem(product, quantity)
     toast.success(`${quantity} ${quantity === 1 ? 'item adicionado' : 'itens adicionados'} ao carrinho!`)
     setQuantity(1)
@@ -44,7 +44,6 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
 
   return (
     <div className="space-y-4">
-      {/* Quantity Selector */}
       <div className="flex items-center gap-4">
         <span className="text-sm font-medium">Quantidade:</span>
         <div className="flex items-center gap-2">
@@ -68,7 +67,6 @@ export function AddToCartButton({ product }: AddToCartButtonProps) {
         </div>
       </div>
 
-      {/* Add to Cart Button */}
       <Button onClick={handleAddToCart} className="w-full gap-2" size="lg">
         <ShoppingBag className="h-5 w-5" />
         Adicionar ao Carrinho

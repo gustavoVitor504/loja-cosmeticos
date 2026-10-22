@@ -32,7 +32,6 @@ export function ImageCarousel({ images, productName }: ImageCarouselProps) {
 
   return (
     <div className="space-y-4">
-      {/* Main Image */}
       <div className="relative aspect-square w-full overflow-hidden rounded-xl bg-muted">
         <Image
           src={images[currentIndex]}
@@ -41,7 +40,7 @@ export function ImageCarousel({ images, productName }: ImageCarouselProps) {
           className="object-cover"
           priority
         />
-        
+
         {images.length > 1 && (
           <>
             <Button
@@ -64,7 +63,6 @@ export function ImageCarousel({ images, productName }: ImageCarouselProps) {
         )}
       </div>
 
-      {/* Thumbnails */}
       {images.length > 1 && (
         <div className="flex gap-2 overflow-x-auto pb-2">
           {images.map((image, index) => (

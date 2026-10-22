@@ -16,11 +16,9 @@ export interface AuthenticatedRequest extends Request {
 }
 
 export function isAdmin(user: User) {
-  // app_metadata só pode ser alterado com a service_role, ao contrário de user_metadata
   return user.app_metadata?.is_admin === true
 }
 
-/** Valida o JWT do Supabase enviado em `Authorization: Bearer <token>`. */
 @Injectable()
 export class AuthGuard implements CanActivate {
   constructor(

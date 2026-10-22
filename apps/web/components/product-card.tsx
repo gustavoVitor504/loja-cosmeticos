@@ -16,7 +16,7 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const addItem = useCartStore((state) => state.addItem)
-  
+
   const discountedPrice = product.discount_percent > 0
     ? product.price * (1 - product.discount_percent / 100)
     : product.price
@@ -24,12 +24,12 @@ export function ProductCard({ product }: ProductCardProps) {
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault()
     e.stopPropagation()
-    
+
     if (product.stock <= 0) {
       toast.error('Produto sem estoque')
       return
     }
-    
+
     addItem(product)
     toast.success('Produto adicionado ao carrinho!')
   }
@@ -50,8 +50,7 @@ export function ProductCard({ product }: ProductCardProps) {
               <span className="text-muted-foreground">Sem imagem</span>
             </div>
           )}
-          
-          {/* Badges */}
+
           <div className="absolute left-2 top-2 flex flex-col gap-1">
             {product.discount_percent > 0 && (
               <Badge className="bg-destructive text-destructive-foreground">
@@ -65,7 +64,7 @@ export function ProductCard({ product }: ProductCardProps) {
               </Badge>
             )}
           </div>
-          
+
           {product.stock <= 0 && (
             <div className="absolute inset-0 flex items-center justify-center bg-background/80">
               <Badge variant="secondary" className="text-sm">
@@ -74,12 +73,12 @@ export function ProductCard({ product }: ProductCardProps) {
             </div>
           )}
         </div>
-        
+
         <CardContent className="p-4">
           <h3 className="font-medium line-clamp-2 text-sm mb-2 group-hover:text-primary transition-colors">
             {product.name}
           </h3>
-          
+
           <div className="flex items-center gap-2 mb-3">
             {product.discount_percent > 0 && (
               <span className="text-sm text-muted-foreground line-through">
@@ -90,8 +89,8 @@ export function ProductCard({ product }: ProductCardProps) {
               R$ {discountedPrice.toFixed(2).replace('.', ',')}
             </span>
           </div>
-          
-          <Button 
+
+          <Button
             onClick={handleAddToCart}
             disabled={product.stock <= 0}
             className="w-full gap-2"

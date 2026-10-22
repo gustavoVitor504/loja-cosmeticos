@@ -1,4 +1,3 @@
--- Inserir categorias
 INSERT INTO public.categories (name, slug, description) VALUES
   ('Perfumaria', 'perfumaria', 'Perfumes e fragrâncias exclusivas Natura'),
   ('Cuidados com o Corpo', 'corpo', 'Hidratantes, óleos e produtos para cuidados corporais'),
@@ -8,7 +7,6 @@ INSERT INTO public.categories (name, slug, description) VALUES
   ('Presentes', 'presentes', 'Kits e conjuntos especiais para presentear')
 ON CONFLICT (slug) DO NOTHING;
 
--- Inserir produtos de exemplo
 INSERT INTO public.products (name, slug, description, price, discount_percent, category_id, stock, is_active, magazine_available, images) VALUES
   ('Essencial Exclusivo Masculino', 'essencial-exclusivo-masculino', 'Uma fragrância sofisticada e marcante para homens modernos. Notas de madeira e especiarias.', 189.90, 15, (SELECT id FROM public.categories WHERE slug = 'perfumaria'), 25, true, true, ARRAY['https://images.unsplash.com/photo-1541643600914-78b084683601?w=500', 'https://images.unsplash.com/photo-1594035910387-fea47794261f?w=500']),
   ('Kaiak Feminino', 'kaiak-feminino', 'Fragrância fresca e envolvente, perfeita para o dia a dia. Notas florais e aquáticas.', 159.90, 10, (SELECT id FROM public.categories WHERE slug = 'perfumaria'), 30, true, true, ARRAY['https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?w=500', 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?w=500']),
@@ -22,7 +20,6 @@ INSERT INTO public.products (name, slug, description, price, discount_percent, c
   ('Faces Hidratante Facial', 'faces-hidratante-facial', 'Hidratante leve para uso diário. Absorção rápida e sensação de frescor.', 44.90, 0, (SELECT id FROM public.categories WHERE slug = 'rosto'), 40, true, false, ARRAY['https://images.unsplash.com/photo-1556228720-195a672e8a03?w=500'])
 ON CONFLICT (slug) DO NOTHING;
 
--- Inserir configurações da consultora
 INSERT INTO public.consultant_settings (name, bio, phone, email, instagram, whatsapp, years_experience) VALUES
   ('Maria Silva', 'Olá! Sou consultora Natura há mais de 8 anos, apaixonada por beleza e bem-estar. Minha missão é ajudar você a encontrar os produtos perfeitos para realçar sua beleza natural. Faço entregas em toda a região e ofereço atendimento personalizado para cada cliente.', '(11) 99999-9999', 'maria@consultora.com', '@mariasilva.natura', '5511999999999', 8)
 ON CONFLICT DO NOTHING;

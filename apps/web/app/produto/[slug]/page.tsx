@@ -37,12 +37,11 @@ export default async function ProductPage({ params }: PageProps) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      
+
       <main className="flex-1">
         <div className="container mx-auto px-4 py-8">
-          {/* Breadcrumb */}
-          <Link 
-            href="/" 
+          <Link
+            href="/"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary mb-6"
           >
             <ArrowLeft className="h-4 w-4" />
@@ -50,12 +49,9 @@ export default async function ProductPage({ params }: PageProps) {
           </Link>
 
           <div className="grid gap-8 lg:grid-cols-2">
-            {/* Images */}
             <ImageCarousel images={product.images} productName={product.name} />
 
-            {/* Product Info */}
             <div className="space-y-6">
-              {/* Badges */}
               <div className="flex flex-wrap gap-2">
                 {product.discount_percent > 0 && (
                   <Badge className="bg-destructive text-destructive-foreground">
@@ -73,10 +69,8 @@ export default async function ProductPage({ params }: PageProps) {
                 )}
               </div>
 
-              {/* Title */}
               <h1 className="text-3xl font-bold tracking-tight">{product.name}</h1>
 
-              {/* Price */}
               <div className="flex items-baseline gap-3">
                 {product.discount_percent > 0 && (
                   <span className="text-xl text-muted-foreground line-through">
@@ -88,7 +82,6 @@ export default async function ProductPage({ params }: PageProps) {
                 </span>
               </div>
 
-              {/* Stock */}
               <div className="flex items-center gap-2">
                 <Package className="h-4 w-4 text-muted-foreground" />
                 {product.stock > 0 ? (
@@ -100,7 +93,6 @@ export default async function ProductPage({ params }: PageProps) {
                 )}
               </div>
 
-              {/* Description */}
               {product.description && (
                 <div className="space-y-2">
                   <h2 className="font-semibold">Descrição</h2>
@@ -110,10 +102,8 @@ export default async function ProductPage({ params }: PageProps) {
                 </div>
               )}
 
-              {/* Add to Cart */}
               <AddToCartButton product={product} />
 
-              {/* Magazine Info */}
               {product.magazine_available && (
                 <div className="rounded-lg border border-secondary bg-secondary/30 p-4">
                   <div className="flex items-start gap-3">
@@ -121,7 +111,7 @@ export default async function ProductPage({ params }: PageProps) {
                     <div>
                       <h3 className="font-medium">Disponível na Revista Natura</h3>
                       <p className="text-sm text-muted-foreground mt-1">
-                        Este produto está disponível na revista atual. 
+                        Este produto está disponível na revista atual.
                         Entre em contato para mais informações sobre promoções exclusivas.
                       </p>
                     </div>
@@ -131,7 +121,6 @@ export default async function ProductPage({ params }: PageProps) {
             </div>
           </div>
 
-          {/* Related Products */}
           {relatedProducts.length > 0 && (
             <section className="mt-16">
               <h2 className="text-2xl font-bold mb-6">Produtos Relacionados</h2>
@@ -142,8 +131,8 @@ export default async function ProductPage({ params }: PageProps) {
                     : related.price
 
                   return (
-                    <Link 
-                      key={related.id} 
+                    <Link
+                      key={related.id}
                       href={`/produto/${related.slug}`}
                       className="group"
                     >
@@ -171,7 +160,7 @@ export default async function ProductPage({ params }: PageProps) {
         </div>
       </main>
 
-      <Footer 
+      <Footer
         name={settings?.name}
         email={settings?.email}
         phone={settings?.phone}

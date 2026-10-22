@@ -27,7 +27,6 @@ export async function updateSession(request: NextRequest) {
       },
     },
   )
-  // Renova o token da sessão nos cookies a cada requisição
   await supabase.auth.getUser()
 
   return supabaseResponse

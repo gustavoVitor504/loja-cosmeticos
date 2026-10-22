@@ -1,11 +1,3 @@
--- =====================================================================
--- 003 - Rastreio de entrega + funções transacionais usadas pela API
--- Rode no SQL Editor do Supabase depois de 001 e 002.
--- Pode ser executado mais de uma vez.
--- =====================================================================
-
--- 1) Novas etapas do pedido -------------------------------------------
--- 'shipped' passa a se chamar 'out_for_delivery' (Saiu para entrega)
 UPDATE public.orders SET status = 'out_for_delivery' WHERE status = 'shipped';
 UPDATE public.orders SET status = 'pending' WHERE status IS NULL;
 
@@ -15,7 +7,6 @@ ALTER TABLE public.orders ADD CONSTRAINT orders_status_check CHECK (
   status IN ('pending', 'confirmed', 'preparing', 'out_for_delivery', 'delivered', 'cancelled')
 );
 
--- 2) Histórico de etapas ----------------------------------------------
 CREATE TABLE IF NOT EXISTS public.order_status_history (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   order_id UUID NOT NULL REFERENCES public.orders(id) ON DELETE CASCADE,
@@ -28,10 +19,8 @@ CREATE TABLE IF NOT EXISTS public.order_status_history (
 CREATE INDEX IF NOT EXISTS order_status_history_order_id_idx
   ON public.order_status_history (order_id, created_at);
 
--- Apenas a API (service role) acessa esta tabela
 ALTER TABLE public.order_status_history ENABLE ROW LEVEL SECURITY;
 
--- Popular histórico dos pedidos antigos
 INSERT INTO public.order_status_history (order_id, status, created_at)
 SELECT o.id, 'pending', o.created_at
 FROM public.orders o
@@ -46,8 +35,6 @@ WHERE o.status <> 'pending'
     WHERE h.order_id = o.id AND h.status = o.status
   );
 
--- 3) Criação de pedido atômica ----------------------------------------
--- Preço vem SEMPRE do banco; estoque é travado e baixado na mesma transação.
 CREATE OR REPLACE FUNCTION public.place_order(
   p_user_id UUID,
   p_customer_name TEXT,
@@ -55,7 +42,7 @@ CREATE OR REPLACE FUNCTION public.place_order(
   p_customer_phone TEXT,
   p_shipping_address TEXT,
   p_notes TEXT,
-  p_items JSONB -- [{ "product_id": uuid, "quantity": int }]
+  p_items JSONB
 ) RETURNS UUID
 LANGUAGE plpgsql
 SET search_path = public
@@ -79,7 +66,6 @@ BEGIN
     p_customer_phone, p_shipping_address, p_notes
   ) RETURNING id INTO v_order_id;
 
-  -- Agrupa itens repetidos e ordena por id para evitar deadlock entre pedidos simultâneos
   FOR v_item IN
     SELECT (e->>'product_id')::UUID AS product_id,
            SUM((e->>'quantity')::INT)::INT AS quantity
@@ -123,8 +109,6 @@ BEGIN
 END;
 $$;
 
--- 4) Mudança de etapa com histórico -----------------------------------
--- Ao cancelar, o estoque dos itens é devolvido. Pedido cancelado não pode ser reaberto.
 CREATE OR REPLACE FUNCTION public.update_order_status(
   p_order_id UUID,
   p_status TEXT,
@@ -165,15 +149,11 @@ BEGIN
 END;
 $$;
 
--- Só a API (service role) pode chamar essas funções
 REVOKE ALL ON FUNCTION public.place_order(UUID, TEXT, TEXT, TEXT, TEXT, TEXT, JSONB) FROM PUBLIC, anon, authenticated;
 REVOKE ALL ON FUNCTION public.update_order_status(UUID, TEXT, TEXT, UUID) FROM PUBLIC, anon, authenticated;
 GRANT EXECUTE ON FUNCTION public.place_order(UUID, TEXT, TEXT, TEXT, TEXT, TEXT, JSONB) TO service_role;
 GRANT EXECUTE ON FUNCTION public.update_order_status(UUID, TEXT, TEXT, UUID) TO service_role;
 
--- 5) Flag de admin segura ---------------------------------------------
--- user_metadata pode ser alterado pelo próprio usuário; app_metadata só pelo servidor.
--- A API e o front passam a checar app_metadata.is_admin.
 UPDATE auth.users
 SET raw_app_meta_data = COALESCE(raw_app_meta_data, '{}'::JSONB) || '{"is_admin": true}'::JSONB
 WHERE raw_user_meta_data->>'is_admin' = 'true';

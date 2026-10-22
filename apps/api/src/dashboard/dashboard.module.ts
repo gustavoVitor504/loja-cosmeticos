@@ -42,7 +42,6 @@ export class DashboardService {
       lowStockProducts: (lowStock.data ?? []) as Product[],
       ordersCount: allOrders.length,
       pendingOrders: allOrders.filter((o) => o.status === 'pending').length,
-      // Pedidos cancelados não entram na receita
       totalRevenue: allOrders
         .filter((o) => o.status !== 'cancelled')
         .reduce((sum, o) => sum + Number(o.total), 0),

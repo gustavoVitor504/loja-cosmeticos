@@ -23,9 +23,7 @@ function formatDate(date: string) {
   })
 }
 
-/** Linha do tempo das etapas da entrega, com data e observação de cada etapa já alcançada. */
 export function OrderTimeline({ status, history = [] }: OrderTimelineProps) {
-  // Última ocorrência de cada etapa (o histórico vem em ordem cronológica)
   const reached = new Map<OrderStatus, OrderStatusHistory>()
   for (const entry of history) reached.set(entry.status, entry)
 

@@ -11,9 +11,8 @@ export default async function AboutPage() {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      
+
       <main className="flex-1">
-        {/* Hero Section */}
         <section className="bg-gradient-to-b from-secondary/50 to-background py-16">
           <div className="container mx-auto px-4 text-center">
             <Badge variant="secondary" className="mb-4">
@@ -32,10 +31,9 @@ export default async function AboutPage() {
 
         <section className="container mx-auto px-4 py-12">
           <div className="grid gap-8 lg:grid-cols-2">
-            {/* Bio Card */}
             <Card className="lg:row-span-2">
               <CardContent className="p-6 space-y-6">
-                {/* Photo placeholder */}
+
                 <div className="relative aspect-square max-w-sm mx-auto overflow-hidden rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20">
                   {consultant?.photo_url ? (
                     <img
@@ -52,7 +50,7 @@ export default async function AboutPage() {
 
                 <div className="text-center space-y-4">
                   <h2 className="text-2xl font-bold">{consultant?.name || 'Maria Silva'}</h2>
-                  
+
                   {consultant?.bio && (
                     <p className="text-muted-foreground leading-relaxed">
                       {consultant.bio}
@@ -62,18 +60,17 @@ export default async function AboutPage() {
               </CardContent>
             </Card>
 
-            {/* Contact Card */}
             <Card>
               <CardContent className="p-6 space-y-4">
                 <h3 className="text-xl font-semibold">Entre em Contato</h3>
                 <p className="text-muted-foreground">
-                  Estou disponível para tirar dúvidas, fazer pedidos personalizados 
+                  Estou disponível para tirar dúvidas, fazer pedidos personalizados
                   e ajudar você a escolher os melhores produtos.
                 </p>
-                
+
                 <div className="space-y-3 pt-2">
                   {consultant?.phone && (
-                    <a 
+                    <a
                       href={`tel:${consultant.phone}`}
                       className="flex items-center gap-3 p-3 rounded-lg border hover:border-primary transition-colors"
                     >
@@ -84,9 +81,9 @@ export default async function AboutPage() {
                       </div>
                     </a>
                   )}
-                  
+
                   {consultant?.whatsapp && (
-                    <a 
+                    <a
                       href={`https://wa.me/${consultant.whatsapp}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -99,9 +96,9 @@ export default async function AboutPage() {
                       </div>
                     </a>
                   )}
-                  
+
                   {consultant?.email && (
-                    <a 
+                    <a
                       href={`mailto:${consultant.email}`}
                       className="flex items-center gap-3 p-3 rounded-lg border hover:border-primary transition-colors"
                     >
@@ -112,9 +109,9 @@ export default async function AboutPage() {
                       </div>
                     </a>
                   )}
-                  
+
                   {consultant?.instagram && (
-                    <a 
+                    <a
                       href={`https://instagram.com/${consultant.instagram.replace('@', '')}`}
                       target="_blank"
                       rel="noopener noreferrer"
@@ -131,11 +128,10 @@ export default async function AboutPage() {
               </CardContent>
             </Card>
 
-            {/* Benefits Card */}
             <Card>
               <CardContent className="p-6 space-y-4">
                 <h3 className="text-xl font-semibold">Por que comprar comigo?</h3>
-                
+
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
                     <div className="rounded-full bg-primary/10 p-2">
@@ -148,7 +144,7 @@ export default async function AboutPage() {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3">
                     <div className="rounded-full bg-primary/10 p-2">
                       <Heart className="h-5 w-5 text-primary" />
@@ -160,7 +156,7 @@ export default async function AboutPage() {
                       </p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start gap-3">
                     <div className="rounded-full bg-primary/10 p-2">
                       <Leaf className="h-5 w-5 text-primary" />
