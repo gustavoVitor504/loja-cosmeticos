@@ -1,35 +1,69 @@
-# loja-cosmeticos
+# Loja de Cosméticos
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [v0](https://v0.app).
+E-commerce de cosméticos em Next.js com Supabase, com catálogo, carrinho, checkout com validação de estoque, área do cliente e painel administrativo.
 
-## Built with v0
+> **Projeto de portfólio.** A loja é uma demonstração e nenhum produto é vendido.
 
-This repository is linked to a [v0](https://v0.app) project. You can continue developing by visiting the link below -- start new chats to make changes, and v0 will push commits directly to this repo. Every merge to `main` will automatically deploy.
+**[Ver site no ar](https://v0-site-cosmeticos-natura.vercel.app)**
 
-[Continue working on v0 →](https://v0.app/chat/projects/prj_vubN56YR81rNssH2QsUI16RM7BZK)
+## Funcionalidades
 
-## Getting Started
+- Catálogo com filtros e página de produto com carrossel de imagens
+- Cadastro e login com Supabase Auth
+- Carrinho persistente (mantido ao recarregar a página)
+- Checkout que valida o estoque de cada item antes de criar o pedido e dá baixa no estoque
+- Área "Meus pedidos" com o detalhe de cada compra
+- Painel administrativo protegido: cadastro e edição de produtos, gestão de pedidos com atualização de status e configurações da loja
 
-First, run the development server:
+## Tecnologias
+
+- Next.js (App Router), React e TypeScript
+- Supabase (PostgreSQL e autenticação)
+- Tailwind CSS e shadcn/ui
+- Zustand (estado do carrinho)
+- React Hook Form e Zod (formulários e validação)
+- Deploy na Vercel
+
+## Destaques técnicos
+
+- **Middleware do Next.js** que renova a sessão do usuário e bloqueia `/admin` para quem não é administrador
+- **Route handler** (`app/api/checkout`) que roda no servidor e valida usuário, carrinho e estoque antes de gravar o pedido
+- **Server Actions** para as operações do painel administrativo
+- **Scripts SQL versionados** (`scripts/`) para criar as tabelas e popular o banco
+
+## Desenvolvimento assistido por IA
+
+A interface foi construída com apoio do [v0](https://v0.app), ferramenta de IA generativa da Vercel. A integração com o Supabase, as regras de negócio do checkout e a proteção das rotas administrativas foram revisadas e ajustadas manualmente.
+
+## Como rodar localmente
+
+Pré-requisitos: Node.js 18+ e um projeto no [Supabase](https://supabase.com).
+
+1. Clone e instale as dependências:
+
+```bash
+git clone https://github.com/gustavoVitor504/loja-cosmeticos.git
+cd loja-cosmeticos
+npm install
+```
+
+2. Crie um arquivo `.env.local` na raiz:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=https://SEU-PROJETO.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=sua_anon_key
+```
+
+3. No SQL Editor do Supabase, rode `scripts/001_create_tables.sql` e depois `scripts/002_seed_data.sql`.
+
+4. Inicie o projeto:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Acesse `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Autor
 
-## Learn More
-
-To learn more, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-- [v0 Documentation](https://v0.app/docs) - learn about v0 and how to use it.
-
-<a href="https://v0.app/chat/api/kiro/clone/gustavoVitor504/loja-cosmeticos" alt="Open in Kiro"><img src="https://pdgvvgmkdvyeydso.public.blob.vercel-storage.com/open%20in%20kiro.svg?sanitize=true" /></a>
+**Gustavo Vitor Ferreira Nunes** — [LinkedIn](https://www.linkedin.com/in/gustavovitorferreira/) · [GitHub](https://github.com/gustavoVitor504)
